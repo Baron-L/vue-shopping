@@ -1,13 +1,13 @@
 <template>
   <div>
-      <type-nav></type-nav>
-      <list-container></list-container>
-      <Recommend> </Recommend>
-      <Rank></Rank>
-      <Like></Like>
-      <Floor></Floor>
-      <Floor></Floor>
-      <Brand></Brand>
+    <type-nav></type-nav>
+    <list-container></list-container>
+    <Recommend> </Recommend>
+    <Rank></Rank>
+    <Like></Like>
+    <Floor></Floor>
+    <Floor></Floor>
+    <Brand></Brand>
   </div>
 </template>
 
