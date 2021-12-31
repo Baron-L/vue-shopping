@@ -15,6 +15,11 @@ export default {
     Header,
     Footer
   },
+  mounted () {
+    // 优化商品列表切换多次请求
+    this.$store.dispatch('categoryList')
+    ;
+  },
 }
 </script>
 

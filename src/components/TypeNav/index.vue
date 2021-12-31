@@ -1,32 +1,35 @@
 <template>
    <div class="type-nav">
         <div class="container">
-            <div @mouseleave="leaveIndex">
+            <div @mouseleave="leaveIndex" @mouseenter="enterShow">
                 <h2 class="all">全部商品分类</h2>
-                <div class="sort">
-                    <div class="all-sort-list2" @click="goSearch">
-                        <!-- 绑定样式 -->
-                        <div class="item" :class="{cur: currentIndex === index}" v-for="(item, index) in categoryList" :key="item.categoryId">
-                            <h3 @mouseenter="changeIndex(index)">
-                                <a :data-categoryName="item.categoryName" :data-category1Id="item.categoryId">{{item.categoryName}}</a>
-                            </h3>
-                            <div class="item-list clearfix" :style="{display: currentIndex === index ? 'block' : 'none'}">
-                                <div class="subitem" v-for="itemChild in item.categoryChild" :key="itemChild.categoryId">
-                                    <dl class="fore">
-                                        <dt>
-                                            <a :data-categoryName="itemChild.categoryName" :data-category2Id="itemChild.categoryId">{{itemChild.categoryName}}</a>
-                                        </dt>
-                                        <dd>
-                                            <em v-for="itemListChild in itemChild.categoryChild" :key="itemListChild.categoryId">
-                                                <a :data-categoryName="itemListChild.categoryName" :data-category3Id="itemListChild.categoryId">{{itemListChild.categoryName}}</a>
-                                            </em>
-                                        </dd>
-                                    </dl>
+                <transition name="sort">
+                    <div class="sort" v-show="isShow">
+                        <div class="all-sort-list2" @click="goSearch">
+                            <!-- 绑定样式 -->
+                            <div class="item" :class="{cur: currentIndex === index}" v-for="(item, index) in categoryList" :key="item.categoryId">
+                                <h3 @mouseenter="changeIndex(index)">
+                                    <a :data-categoryName="item.categoryName" :data-category1Id="item.categoryId">{{item.categoryName}}</a>
+                                </h3>
+                                <div class="item-list clearfix" :style="{display: currentIndex === index ? 'block' : 'none'}">
+                                    <div class="subitem" v-for="itemChild in item.categoryChild" :key="itemChild.categoryId">
+                                        <dl class="fore">
+                                            <dt>
+                                                <a :data-categoryName="itemChild.categoryName" :data-category2Id="itemChild.categoryId">{{itemChild.categoryName}}</a>
+                                            </dt>
+                                            <dd>
+                                                <em v-for="itemListChild in itemChild.categoryChild" :key="itemListChild.categoryId">
+                                                    <a :data-categoryName="itemListChild.categoryName" :data-category3Id="itemListChild.categoryId">{{itemListChild.categoryName}}</a>
+                                                </em>
+                                            </dd>
+                                        </dl>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                </div>
+                </transition>  
+                
             </div>
             <nav class="nav">
                 <a href="###">服装城</a>
@@ -53,12 +56,16 @@ export default {
     data() {
         return {
             // 存储用户鼠标滑过的索引
-            currentIndex: -1
+            currentIndex: -1,
+            isShow: true
         }
     },
     // 组件挂载完毕，发送请求
     mounted () {
-        this.$store.dispatch('categoryList')
+        // 如果不是Home路由组件，将TypeNav隐藏
+        if (this.$route.path != "/home") {
+            this.isShow = false;
+        }
     },
     computed: {
         ...mapState({
@@ -79,6 +86,15 @@ export default {
         // 鼠标移出 清空currentIndex
         leaveIndex() {
             this.currentIndex = -1
+            if (this.$route.path != "/home") {
+                this.isShow = false;
+            }
+        },
+        // 鼠标移入的时候，进行列表展示
+        enterShow() {
+            if (this.$route.path != "/home") {
+                this.isShow = true;
+            }
         },
         // 路由跳转的方法
         goSearch (event) {
@@ -86,6 +102,7 @@ export default {
             // 利用事件委派存在一些问题： 如何确认点击的a标签， 参数如何获取
             // 获取当前事件触发节点
             let node = event.target
+
             // 需要带有data-categoryname这样的节点
             // 如果标签身上拥有categoryname的属性一定是a标签
             let { categoryname, category1id, category2id, category3id} = node.dataset
@@ -100,10 +117,15 @@ export default {
                 } else {
                     query.category3Id = category3id
                 }
-                // 整理合并参数
-                location.query = query
-                // 路由跳转
-                this.$router.push(location)
+                // 判断：如果路由跳转的时候，带有params参数，整体携带过去
+                if (this.$route.params) {
+                    location.params = this.$route.params
+                     // 整理合并参数
+                    location.query = query
+                    // 路由跳转
+                    this.$router.push(location)
+                }
+               
             }
         }
     },
@@ -234,6 +256,19 @@ export default {
                     background: skyblue;
                 }
             }
+        }
+        //过渡动画的样式
+        //过渡动画开始状态（进入）
+        .sort-enter {
+        height: 0px;
+        }
+        // 过渡动画结束状态（进入）
+        .sort-enter-to {
+        height: 461px;
+        }
+        // 定义动画时间、速率
+        .sort-enter-active {
+        transition: all 0.2s linear;
         }
     }
 }
