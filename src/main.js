@@ -7,6 +7,9 @@ Vue.component(TypeNav.name, TypeNav)
 // 轮播图全局组件
 import Carsousel from "@/components/Carousel";
 Vue.component(Carsousel.name, Carsousel)
+// 分页全局组件
+import Pagination from '@/components/Pagination'
+Vue.component(Pagination.name, Pagination)
 // 引入路由
 import router from '@/router'
 // 引入vuex仓库
@@ -19,6 +22,9 @@ Vue.config.productionTip = false
 
 new Vue({
   render: h => h(App),
+  beforeCreate() {
+    Vue.prototype.$bus = this;
+  },
   router,
   store
 }).$mount('#app')

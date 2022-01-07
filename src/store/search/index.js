@@ -17,7 +17,18 @@ const actions = {
     }
   },
 };
-const getters = {};
+const getters = {
+  goodsList(state) {
+    // 这样书写有问题
+    return state.searchList.goodsList || [];
+  },
+  trademarkList(state) {
+    return state.searchList.trademarkList || [];
+  },
+  attrsList(state) {
+    return state.searchList.attrsList || [];
+  },
+};
 
 export default {
   state,

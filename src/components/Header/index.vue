@@ -64,6 +64,11 @@ export default {
       keyword: "",
     };
   },
+  mounted() {
+    this.$bus.$on("clearInput", () => {
+      this.keyword = "";
+    });
+  },
   methods: {
     goSearch() {
       // 传递参数
