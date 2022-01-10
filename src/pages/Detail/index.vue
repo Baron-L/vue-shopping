@@ -96,12 +96,22 @@
             </div>
             <div class="cartWrap">
               <div class="controls">
-                <input autocomplete="off" class="itxt" />
-                <a href="javascript:" class="plus">+</a>
-                <a href="javascript:" class="mins">-</a>
+                <input
+                  autocomplete="off"
+                  class="itxt"
+                  v-model="number"
+                  @change="changeNumber"
+                />
+                <a href="javascript:" class="plus" @click="number++">+</a>
+                <a
+                  href="javascript:"
+                  class="mins"
+                  @click="number > 1 ? number-- : (number = 1)"
+                  >-</a
+                >
               </div>
               <div class="add">
-                <a href="javascript:">加入购物车</a>
+                <a @click="addshopcar">加入购物车</a>
               </div>
             </div>
           </div>
@@ -345,6 +355,11 @@ import Zoom from "./Zoom/Zoom";
 import { mapGetters } from "vuex";
 export default {
   name: "Detail",
+  data() {
+    return {
+      number: 1,
+    };
+  },
   components: {
     ImageList,
     Zoom,
@@ -366,6 +381,34 @@ export default {
         item.isChecked = 0;
       });
       value.isChecked = "1";
+    },
+    changeNumber(event) {
+      //用户输入进来的文本 * 1
+      let value = event.target.value * 1;
+      //如果用户输入进来的非法,出现NaN或者小于1
+      if (isNaN(value) || value < 1) {
+        this.number = 1;
+      } else {
+        //正常大于1【大于1整数不能出现小数】
+        this.number = parseInt(value);
+      }
+    },
+    async addshopcar() {
+      try {
+        await this.$store.dispatch("addOrUpdateShopCart", {
+          skuId: this.$route.params.skuId,
+          skuNum: this.number,
+        });
+        sessionStorage.setItem("SKUINFO", JSON.stringify(this.skuInfo));
+        this.$router.push({
+          name: "addCartSuccess",
+          query: {
+            skuNum: this.number,
+          },
+        });
+      } catch (error) {
+        alert(error.message);
+      }
     },
   },
 };

@@ -18,6 +18,23 @@ export const reqGetDetailInfo = (skuId) =>
     url: `/item/${skuId}`,
     method: "get",
   });
+
+// 购物车添加/修改接口
+export const reqAddOrUpdateShopCart = (skuId, skuNum) =>
+  requests({ url: `/cart/addToCart/${skuId}/${skuNum}`, method: "post" });
+
+// 获取购物车数据
+export const reqCartList = () =>
+  requests({ url: "/cart/cartList ", method: "get" });
+
+// 删除购物车数据
+export const reqDeleteCartById = (skuId) =>
+  requests({ url: `/cart/deleteCart/${skuId}`, method: "delete" });
+
+//修改商品的选中状态
+//URL:/api/cart/checkCart/{skuId}/{isChecked}   method:get
+export const reqUpdateCheckedByid = (skuId, isChecked) =>
+  requests({ url: `/cart/checkCart/${skuId}/${isChecked}`, method: "get" });
 // 获取banner接口  mock模拟数据
 export const reqGetBannerList = () => mockRequests.get("/banner");
 // 获取floor接口  mock模拟数据
