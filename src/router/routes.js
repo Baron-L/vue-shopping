@@ -6,6 +6,7 @@ import Search from "@/pages/Search";
 import Detail from "@/pages/Detail";
 import AddCartSuccess from "@/pages/AddCartSuccess";
 import Shopcart from "@/pages/ShopCart";
+import Trade from "@/pages/Trade";
 // 所有路由配置信息
 export default [
   // 路由重定向
@@ -60,5 +61,12 @@ export default [
   {
     path: "/shopcart",
     component: Shopcart,
+  },
+  {
+    path: "/trade",
+    component: Trade,
+    meta: {
+      isShow: false,
+    },
   },
 ];

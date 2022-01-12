@@ -5,20 +5,20 @@
     <Recommend> </Recommend>
     <Rank></Rank>
     <Like></Like>
-    <Floor v-for="item in floorList" :key='item.id' :list='item'></Floor>
+    <Floor v-for="item in floorList" :key="item.id" :list="item"></Floor>
     <!-- <Floor></Floor> -->
     <Brand></Brand>
   </div>
 </template>
 
 <script>
-import ListContainer from './ListContainer'
-import Recommend from './Recommend'
-import Rank from './Rank'
-import Like from './Like'
-import Floor from './Floor'
-import Brand from './Brand'
-import { mapState } from 'vuex'
+import ListContainer from "./ListContainer";
+import Recommend from "./Recommend";
+import Rank from "./Rank";
+import Like from "./Like";
+import Floor from "./Floor";
+import Brand from "./Brand";
+import { mapState } from "vuex";
 export default {
   components: {
     ListContainer,
@@ -26,19 +26,17 @@ export default {
     Rank,
     Like,
     Floor,
-    Brand
+    Brand,
   },
-  mounted () {
-    this.$store.dispatch('getFloorList');
+  mounted() {
+    this.$store.dispatch("getFloorList");
   },
   computed: {
     ...mapState({
-        floorList: state => state.home.floorList
-    }) 
+      floorList: (state) => state.home.floorList,
+    }),
   },
-}
+};
 </script>
 
-<style>
-
-</style>
+<style></style>
