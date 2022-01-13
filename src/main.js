@@ -10,6 +10,13 @@ Vue.component(Carsousel.name, Carsousel);
 // 分页全局组件
 import Pagination from "@/components/Pagination";
 Vue.component(Pagination.name, Pagination);
+// 按需引入elementi
+import { Button, MessageBox } from "element-ui";
+// 注册使用element
+Vue.component(Button.name, Button);
+//ElementUI注册组件的时候，还有一种写法，挂在原型上
+Vue.prototype.$msgbox = MessageBox;
+Vue.prototype.$alert = MessageBox.alert;
 // 引入路由
 import router from "@/router";
 // 引入vuex仓库

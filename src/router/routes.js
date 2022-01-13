@@ -8,6 +8,11 @@ import AddCartSuccess from "@/pages/AddCartSuccess";
 import Shopcart from "@/pages/ShopCart";
 import Trade from "@/pages/Trade";
 import Pay from "@/pages/Pay";
+import PaySuccess from "@/pages/PaySuccess";
+import Center from "@/pages/Center";
+// 二级路由组件
+import MyOrder from "@/pages/Center/myOrder";
+import GroupOrder from "@/pages/Center/groupOrder";
 // 所有路由配置信息
 export default [
   // 路由重定向
@@ -76,5 +81,30 @@ export default [
     meta: {
       isShow: false,
     },
+  },
+  {
+    path: "/paysuccess",
+    component: PaySuccess,
+    meta: {
+      isShow: false,
+    },
+  },
+  {
+    path: "/center",
+    component: Center,
+    children: [
+      {
+        path: "/center",
+        redirect: "/center/myorder",
+      },
+      {
+        path: "myorder",
+        component: MyOrder,
+      },
+      {
+        path: "grouporder",
+        component: GroupOrder,
+      },
+    ],
   },
 ];
