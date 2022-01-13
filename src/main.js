@@ -27,8 +27,24 @@ import "@/mock/mockServe";
 import "swiper/css/swiper.css";
 // 统一接口api文件夹里面全部请求函数
 import * as API from "@/api";
+// 引入懒加载图片
+import lazyload from "@/assets/lazyload.jpg";
+//引入懒加载插件
+import VueLazyload from "vue-lazyload";
+//注册插件
+Vue.use(VueLazyload, {
+  //懒加载默认的图片
+  loading: lazyload,
+});
 Vue.config.productionTip = false;
-
+// 引入自定义插件
+import myPlugins from "@/plugins/myPlugins";
+// 使用插件
+Vue.use(myPlugins, {
+  name: "leo",
+});
+//引入表单校验插件
+import "@/plugins/validate";
 new Vue({
   render: (h) => h(App),
   beforeCreate() {

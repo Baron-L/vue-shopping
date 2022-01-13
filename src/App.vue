@@ -8,21 +8,23 @@
 </template>
 
 <script>
-import Header from './components/Header'
-import Footer from './components/Footer'
+import Header from "./components/Header";
+import Footer from "./components/Footer";
 export default {
   components: {
     Header,
-    Footer
+    Footer,
   },
-  mounted () {
+  data() {
+    return {
+      message: "leo",
+    };
+  },
+  mounted() {
     // 优化商品列表切换多次请求
-    this.$store.dispatch('categoryList')
-    ;
+    this.$store.dispatch("categoryList");
   },
-}
+};
 </script>
 
-<style>
-
-</style>
+<style></style>
